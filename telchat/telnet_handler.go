@@ -245,6 +245,7 @@ func (telnetHandler *ShellHandler) ServeTELNET(telctx telnet.Context, writer tel
 			lineString := line.String()
 
 			if "\r\n" == lineString {
+				charcount = 0
 				line.Reset()
 				if _, err := oi.LongWrite(writer, promptBytes); nil != err {
 					return
@@ -257,6 +258,7 @@ func (telnetHandler *ShellHandler) ServeTELNET(telctx telnet.Context, writer tel
 			logger.Debugf("Have %d tokens.", len(fields))
 			logger.Tracef("Tokens: %v", fields)
 			if len(fields) <= 0 {
+				charcount = 0
 				line.Reset()
 				if _, err := oi.LongWrite(writer, promptBytes); nil != err {
 					return
@@ -288,6 +290,7 @@ func (telnetHandler *ShellHandler) ServeTELNET(telctx telnet.Context, writer tel
 				return
 			}
 
+			charcount = 0
 			line.Reset()
 			if _, err := oi.LongWrite(writer, promptBytes); nil != err {
 				return
